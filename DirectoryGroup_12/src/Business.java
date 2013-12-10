@@ -92,6 +92,16 @@ public class Business implements Serializable{
 			events.get(i).print();
 		}
 	}
+	
+	public void addEmployee(Employee emp)
+	{
+		this.employees.add(emp);
+	}
+	
+	public void addCustomer(Customer cust)
+	{
+		this.customers.add(cust);
+	}
 
 	public void printAll(){
 		printEmployees();

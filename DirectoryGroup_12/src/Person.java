@@ -84,4 +84,15 @@ public class Person {
 			schedule.get(i).print();
 		}
 	}
+	
+	public void PrintGroups()
+	{
+		System.out.println("Person is in the following groups: ");
+		for (int i=0; i<groups.size();i++)
+		{
+			groups.get(i).print();
+		}
+	}
+	
+	
 }

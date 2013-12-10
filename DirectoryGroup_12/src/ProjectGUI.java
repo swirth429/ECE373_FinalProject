@@ -261,7 +261,7 @@ public class ProjectGUI extends JFrame implements ActionListener {
 		
 		JOptionPane.showMessageDialog(this,
 				tempPanel,
-				"University Info",				
+				"Business Info",				
 				JOptionPane.PLAIN_MESSAGE);
 		
 		System.setOut(System.out);
@@ -334,6 +334,7 @@ public class ProjectGUI extends JFrame implements ActionListener {
 				redirectSystemStreams();
 				
 				tempPerson.print();
+				tempPerson.printSchedule();
 				
 				tempPanel2.add(tArea);
 				JOptionPane.showMessageDialog(this, 
@@ -348,6 +349,7 @@ public class ProjectGUI extends JFrame implements ActionListener {
 	public void HandlePeopleCreate()
 	{
 		int rslt;
+		int rslt2;
 		String name = null;
 		String phone = null;
 		String email = null;
@@ -360,8 +362,7 @@ public class ProjectGUI extends JFrame implements ActionListener {
 		
 		group.add(selectEmp);
 		group.add(selectCust);
-		
-		Person newPerson = null;
+				
 		
 		JPanel tempPanel = new JPanel();		
 		JPanel tempPanel2 = new JPanel();
@@ -371,9 +372,14 @@ public class ProjectGUI extends JFrame implements ActionListener {
 		JLabel nameLabel = new JLabel("Name: ");
 		JLabel phoneLabel = new JLabel("Phone Number: ");
 		JLabel emailLabel = new JLabel("Email: ");
+		JLabel titleLabel = new JLabel("Employee's Title: ");
+		JLabel leadEmp = new JLabel("Lead Employee: ");
 		JTextField nameBox = new JTextField(15);
 		JTextField phoneBox = new JTextField(15);
 		JTextField emailBox = new JTextField(15);
+		JTextField titleBox = new JTextField(15);
+		JTextField leadEmpBox = new JTextField(15);
+		
 		
 		tempPanel.add(selectEmp);
 		tempPanel.add(selectCust);
@@ -429,18 +435,72 @@ public class ProjectGUI extends JFrame implements ActionListener {
 			{
 				if(selectEmp.isSelected() == true)
 				{
-					newPerson = new Employee();
+					Employee newPerson = new Employee();
 					newPerson.setName(name);
 					newPerson.setPhone(phone);
 					newPerson.setEmail(email);
+					tempBusiness.addEmployee(newPerson);
+					
+					tempPanel2.add(titleLabel);
+					tempPanel2.add(titleBox);
+					
+					
+					rslt2 = JOptionPane.showConfirmDialog(this,
+							tempPanel2,
+							"Add Employee Title",
+							JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE);
+					
+					if (rslt2 == JOptionPane.OK_OPTION)
+					{
+						String title = titleBox.getText();						
+						newPerson.setTitle(title);
+					}
 				}
 				
 				else 
 				{
-					newPerson = new Customer();
+					Customer newPerson = new Customer();
 					newPerson.setName(name);
 					newPerson.setPhone(phone);
 					newPerson.setEmail(email);
+					tempBusiness.addCustomer(newPerson);
+					Employee tempEmp=null;
+					boolean flag = true;
+					
+					tempPanel2.add(leadEmp);
+					tempPanel2.add(leadEmpBox);
+					
+					rslt2 = JOptionPane.showConfirmDialog(this,
+							tempPanel2,
+							"Add a Lead Employee for this customer",
+							JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE);
+					
+					if (rslt2 == JOptionPane.OK_OPTION)
+					{
+						for(int i=0; i<tempBusiness.getEmployees().size();i++)
+						{
+							if(tempBusiness.getEmployees().get(i).getName().equals(leadEmpBox.getText()))
+							{
+								tempEmp = tempBusiness.getEmployees().get(i);
+								newPerson.setLead(tempEmp);
+								flag = false;
+							}
+						}
+												
+					}
+					if (flag == true)
+					{
+						JOptionPane.showMessageDialog(this, 
+								"Person already exists!", 
+								"Error: Person found", 
+								JOptionPane.PLAIN_MESSAGE);
+					}
+					
+					
+					
+					
 				}
 			}
 			
@@ -465,6 +525,8 @@ public class ProjectGUI extends JFrame implements ActionListener {
 			System.out.println(tempBusiness.getCustomers().get(i).getName());
 		}
 		
+		System.out.println("\n\nList of Employees: \n");
+		
 		for (int i=0; i<tempBusiness.getEmployees().size(); i++)
 		{
 			System.out.println(tempBusiness.getEmployees().get(i).getName());
@@ -483,10 +545,175 @@ public class ProjectGUI extends JFrame implements ActionListener {
 	
 	public void HandleGroupAddPerson()
 	{
-		HandlePeopleSearch();
+		int rslt;
+		int rslt2;
+		String name = null;
 		
+		JPanel tempPanel = new JPanel();
+		JPanel tempPanel2 = new JPanel();
+		
+		tempPanel.setLayout(new GridLayout(1,2));
+		
+		JLabel nameLabel = new JLabel("Name: ");
+		JTextField nameBox = new JTextField(15);
+		
+		tempPanel.add(nameLabel);
+		tempPanel.add(nameBox);
+		
+		rslt = JOptionPane.showConfirmDialog(this,
+				tempPanel,
+				"Search People",
+				JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		
+		if (rslt == JOptionPane.OK_OPTION)
+		{
+			name = nameBox.getText();
+			
+			if(name.trim().equals("")) {
+				JOptionPane.showMessageDialog(this, 
+											"Please enter a valid name", 
+											"Error: Please enter a valid name", 
+											JOptionPane.PLAIN_MESSAGE);
+			}
+			
+			else if(containsPerson(name) == false)
+			{
+				JOptionPane.showMessageDialog(this, 
+						"Person not found", 
+						"Error: Person not found", 
+						JOptionPane.PLAIN_MESSAGE);
+			}
+			
+			else if(containsPerson(name) == true)
+			{
+				JTextArea tArea = new JTextArea();
+				Person tempPerson = null;
+				
+				for (int i=0;i<tempBusiness.getEmployees().size();i++)
+				{
+					if (name.trim().equals(tempBusiness.getEmployees().get(i).getName()))
+					{
+						tempPerson = tempBusiness.getEmployees().get(i);
+					}
+								
+				}
+				
+				for (int i=0; i < tempBusiness.getCustomers().size();i++)
+				{
+					if (name.trim().equals(tempBusiness.getCustomers().get(i).getName()))
+					{
+						tempPerson = tempBusiness.getCustomers().get(i);
+					}
+				}
+				redirectSystemStreams();
+				tempPerson.PrintGroups();
+				System.out.println("\n\n Groups currently not a part of: ");
+				for(int i=0; i< tempPerson.groups.size();i++)
+				{
+					for(int j=0;j<tempBusiness.getProjectGroups().size();j++)
+					{
+						if(tempPerson.groups.get(i).equals(tempBusiness.getProjectGroups().get(j)))
+						{
+							
+						}
+						
+						else
+						{
+							tempBusiness.getProjectGroups().get(j).print();
+						}
+					}
+				}
+				
+					rslt2=	JOptionPane.showConfirmDialog(this,
+						tempPanel,
+						"Groups",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.PLAIN_MESSAGE);
+					
+					if (rslt2 == JOptionPane.OK_OPTION)
+					{
+						boolean inGroupflag = false;
+						boolean skipflag = false;
+						JPanel tempPanel3 = new JPanel();
+						int rslt3;
+						String newName;
+						
+						JLabel nameLabel3 = new JLabel("Name of group to add "+name+"to:");
+						JTextField nameBox2 = new JTextField(15);
+						
+						tempPanel3.add(nameLabel3);
+						tempPanel3.add(nameBox2);
+						
+						rslt3=	JOptionPane.showConfirmDialog(this,
+								tempPanel3,
+								"Please Enter a name",
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE);
+						
+						if (rslt3 == JOptionPane.OK_OPTION)
+						{
+							ProjectGroup newGroup = null;
+							Boolean GroupExists = true;
+							
+							for(int k=0; k< tempBusiness.getProjectGroups().size(); k++)
+							{
+								if(tempBusiness.getProjectGroups().get(k).getName().equals(nameBox2.getText()))
+								{
+									
+									newGroup = tempBusiness.getProjectGroups().get(k);
+									
+								}	
+							}
+							
+							if(newGroup != null)
+							{
+							
+							for(int k=0; k< tempPerson.groups.size(); k++)
+							{
+								if(tempPerson.groups.get(k).equals(newGroup))
+								{
+									skipflag = true;
+									JOptionPane.showMessageDialog(this, 
+											"Already in group", 
+											"Error: Person already in group", 
+											JOptionPane.PLAIN_MESSAGE);
+									
+								}
+								
+								
+							}
+									
+							
+							if (skipflag == false)
+							{
+								
+								
+									
+										
+										tempPerson.addGroup(newGroup);
+										
+										JOptionPane.showMessageDialog(this, 
+												"Success!", 
+												"Success: The new group was added!", 
+												JOptionPane.PLAIN_MESSAGE);
+										
+									
+																																													
+							}
+							
+							
+							}
+														
+						}
+						
+					}
+					
+		
+			}
+		}
+		System.setOut(System.out);
 	}
-	
 	public void HandlePersonAddEvent()
 	{
 		
