@@ -179,7 +179,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 	private void HandleFilePrint()
 	{
 		JPanel tempPanel = new JPanel();
-		textArea = new JTextArea(10,40);
+		textArea = new JTextArea(40,40);
 		tempPanel.setLayout(new FlowLayout());		
 		JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);		
 		textArea.setEditable(false);
@@ -229,7 +229,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, 
 											"Please enter a valid name", 
 											"Error: Please enter a valid name", 
-											JOptionPane.PLAIN_MESSAGE);
+											JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else if(biz.containsPerson(name) == false)
@@ -237,7 +237,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, 
 						"Person not found", 
 						"Error: Person not found", 
-						JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else if(biz.containsPerson(name) == true)
@@ -245,23 +245,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				JTextArea tArea = new JTextArea();
 				Person tempPerson = null;
 				
-				for (int i=0;i<biz.getEmployees().size();i++)
-				{
-					if (name.trim().equals(biz.getEmployees().get(i).getName()))
-					{
-						tempPerson = biz.getEmployees().get(i);
-					}
-								
-				}
-				
-				for (int i=0; i < biz.getCustomers().size();i++)
-				{
-					if (name.trim().equals(biz.getCustomers().get(i).getName()))
-					{
-						tempPerson = biz.getCustomers().get(i);
-					}
-				}
-				
+				tempPerson = biz.findPerson(name);
 								
 				redirectSystemStreams();
 				

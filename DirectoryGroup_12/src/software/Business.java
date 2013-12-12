@@ -125,6 +125,10 @@ public class Business implements Serializable{
 		printEvents();
 	}
 	
+	/*
+	 * returns true if name matches somebody in the database
+	 * returns false is there are no matches in the database
+	 */
 	public boolean containsPerson(String name){
 		boolean customer = false;
 		boolean employee = false;
@@ -147,7 +151,31 @@ public class Business implements Serializable{
 		}
 		
 		return false;
-	}	
+	}
+	
+	/*
+	 * returns the Person that matches the name
+	 * returns null if there is no match
+	 */
+	public Person findPerson(String name){
+		Person pers = null;
+		
+		for (int i=0; i < employees.size(); i++){
+			if (name.trim().equalsIgnoreCase(employees.get(i).getName())){
+				pers = employees.get(i);
+				return pers;
+			}				
+		}
+		
+		for (int i=0; i < customers.size();i++){
+			if (name.trim().equalsIgnoreCase(customers.get(i).getName())){
+				pers = customers.get(i);
+				return pers;
+			}
+		}
+		
+		return pers;
+	}
 
 	public void saveData(){
 		FileOutputStream fileOut = null;
