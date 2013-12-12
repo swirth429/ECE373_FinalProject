@@ -7,6 +7,7 @@ public class Employee extends Person{
 	{
 		super();
 		title = null;
+		
 	}
 	
 	public String getTitle()

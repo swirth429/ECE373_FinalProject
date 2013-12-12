@@ -465,10 +465,15 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		int rslt2;
 		String name = null;
 		
+		JTextArea textArea2 = new JTextArea(40,40);
+		Person tempPerson = null;
+		
 		JPanel tempPanel = new JPanel();
 		JPanel tempPanel2 = new JPanel();
 		
 		tempPanel.setLayout(new GridLayout(1,2));
+		tempPanel2.setLayout(new FlowLayout());
+		
 		
 		JLabel nameLabel = new JLabel("Name: ");
 		JTextField nameBox = new JTextField(15);
@@ -503,8 +508,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 			
 			else if(biz.containsPerson(name) == true)
 			{
-				JTextArea tArea = new JTextArea();
-				Person tempPerson = null;
+				
 				
 				for (int i=0;i<biz.getEmployees().size();i++)
 				{
@@ -522,7 +526,9 @@ public class BusinessGUI extends JFrame implements ActionListener {
 						tempPerson = biz.getCustomers().get(i);
 					}
 				}
-				redirectSystemStreams();
+				
+				redirectSystemStreams2(textArea2);
+				
 				tempPerson.PrintGroups();
 				System.out.println("\n\n Groups currently not a part of: ");
 				for(int i=0; i< tempPerson.getGroups().size();i++)
@@ -541,8 +547,11 @@ public class BusinessGUI extends JFrame implements ActionListener {
 					}
 				}
 				
+				tempPanel2.add(textArea2);
+				System.setOut(System.out);
+				
 					rslt2=	JOptionPane.showConfirmDialog(this,
-						tempPanel,
+						tempPanel2,
 						"Groups",
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
@@ -555,7 +564,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 						int rslt3;
 						String newName;
 						
-						JLabel nameLabel3 = new JLabel("Name of group to add "+name+"to:");
+						JLabel nameLabel3 = new JLabel("Name of group to add "+name+" to:");
 						JTextField nameBox2 = new JTextField(15);
 						
 						tempPanel3.add(nameLabel3);
@@ -684,7 +693,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 	
 	private void updateTextArea(final String text) {
 	    SwingUtilities.invokeLater(new Runnable() {
-	      public void run() {
+	      public void run() {	    	
 	        textArea.append(text);
 	      }
 	    });
@@ -710,6 +719,35 @@ public class BusinessGUI extends JFrame implements ActionListener {
 
 	    System.setOut(new PrintStream(out, true));
 	}
-	  
+	 
+	private void updateTextArea2(final String text, final JTextArea area) {
+	    SwingUtilities.invokeLater(new Runnable() {
+	      public void run() {	    	
+	        area.append(text);
+	      }
+	    });
+	}
+
+	private void redirectSystemStreams2(final JTextArea area) {
+	    OutputStream out = new OutputStream() {
+	      @Override
+	      public void write(int b) throws IOException {
+	        updateTextArea2(String.valueOf((char) b),area);
+	      }
+
+	      @Override
+	      public void write(byte[] b, int off, int len) throws IOException {
+	        updateTextArea2(new String(b, off, len),area);
+	      }
+
+	      @Override
+	      public void write(byte[] b) throws IOException {
+	        write(b, 0, b.length);
+	      }
+	    };
+
+	    System.setOut(new PrintStream(out, true));
+	}
+	
 
 }
