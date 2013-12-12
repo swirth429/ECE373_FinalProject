@@ -42,7 +42,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 	private JMenuItem EventPrint;
 	private JMenuItem EditEventList;
 	
-	private Business tempBusiness = null;
+	private Business biz = null;
 	private JTextArea textArea;
 	
 	public BusinessGUI(String title, Business bus)
@@ -55,10 +55,11 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		setSize(WINDOW_HEIGHT,WINDOW_WIDTH);		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		add(new JLabel("<HTML>Welcome to the business directory.<BR>Choose an action from the above menus</HTML",JLabel.CENTER)); 
+		add(new JLabel("<HTML>Welcome to the business directory for " + bus.getName()
+				+ "<BR>Choose an action from the above menus</HTML",JLabel.CENTER)); 
 			
 		
-		tempBusiness = bus;
+		biz = bus;
 		
 		buildGUI();
 		setVisible(true);
@@ -159,92 +160,26 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		JMenuItem source = (JMenuItem) e.getSource();
 		
-		if (source == FileSave)
-		{
-			tempBusiness.saveData();
-		}
+		if (source == FileSave) 	biz.saveData();
+		if (source == FileLoad) 	biz = Business.loadData();
+		if (source == FilePrint) 	HandleFilePrint();
+		if (source == FileExit) 	System.exit(0);
 		
-		if (source == FileLoad)
-		{
-			tempBusiness = Business.loadData();
-		}
+		if (source == PeopleSearch)		HandlePeopleSearch();
+		if (source == PeopleCreate)		HandlePeopleCreate();
+		if (source == PeoplePrint)		HandlePeoplePrint();
+		if (source == PeopleAddGroup)	HandleGroupAddPerson();
+		if (source == PeopleAddEvent)	HandlePersonAddEvent();
 		
-		if (source == FilePrint)
-		{
-			HandleFilePrint();
-		}
+		if (source == GroupSearch)		HandleGroupSearch();
+		if (source == GroupCreate)		HandleGroupCreate();
+		if (source == GroupPrint)		HandleGroupPrint();
+		if (source == GroupEdit)		HandleGroupEdit();
 		
-		if (source == FileExit)
-		{
-			System.exit(0);
-		}
-		
-		if (source == PeopleSearch)
-		{
-			HandlePeopleSearch();
-		}
-		
-		if (source == PeopleCreate)
-		{
-			HandlePeopleCreate();
-		}
-		
-		if (source == PeoplePrint)
-		{
-			HandlePeoplePrint();
-		}
-		
-		if (source == PeopleAddGroup)
-		{
-			HandleGroupAddPerson();
-		}
-		
-		if (source == PeopleAddEvent)
-		{
-			HandlePersonAddEvent();
-		}
-		
-		if (source == GroupSearch)
-		{
-			HandleGroupSearch();
-		}
-		
-		if (source == GroupCreate)
-		{
-			
-		}
-		
-		if (source == GroupPrint)
-		{
-			
-		}
-		
-		if (source == GroupEdit)
-		{
-			
-		}
-		
-		if (source == EventSearch)
-		{
-			
-		}
-		
-		if (source == EventCreate)
-		{
-			
-		}
-		
-		if (source == EventPrint)
-		{
-			
-		}
-		
-		if (source == EditEventList)
-		{
-			
-		}
-		
-				
+		if (source == EventSearch)		HandleEventSearch();
+		if (source == EventCreate)		HandleEventCreate();
+		if (source == EventPrint)		HandleEventPrint();
+		if (source == EditEventList)	HandleEditEventList();
 	}
 	
 	public void HandleFilePrint()
@@ -252,13 +187,13 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		JPanel tempPanel = new JPanel();
 		textArea = new JTextArea(10,40);
 		tempPanel.setLayout(new FlowLayout());		
-		JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);		
+		JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);		
 		textArea.setEditable(false);
 		
 		
 		
 		redirectSystemStreams();				
-		tempBusiness.printAll();
+		biz.printAll();
 		tempPanel.add(scrollPane);
 		
 		
@@ -316,20 +251,20 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				JTextArea tArea = new JTextArea();
 				Person tempPerson = null;
 				
-				for (int i=0;i<tempBusiness.getEmployees().size();i++)
+				for (int i=0;i<biz.getEmployees().size();i++)
 				{
-					if (name.trim().equals(tempBusiness.getEmployees().get(i).getName()))
+					if (name.trim().equals(biz.getEmployees().get(i).getName()))
 					{
-						tempPerson = tempBusiness.getEmployees().get(i);
+						tempPerson = biz.getEmployees().get(i);
 					}
 								
 				}
 				
-				for (int i=0; i < tempBusiness.getCustomers().size();i++)
+				for (int i=0; i < biz.getCustomers().size();i++)
 				{
-					if (name.trim().equals(tempBusiness.getCustomers().get(i).getName()))
+					if (name.trim().equals(biz.getCustomers().get(i).getName()))
 					{
-						tempPerson = tempBusiness.getCustomers().get(i);
+						tempPerson = biz.getCustomers().get(i);
 					}
 				}
 				
@@ -442,7 +377,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 					newPerson.setName(name);
 					newPerson.setPhone(phone);
 					newPerson.setEmail(email);
-					tempBusiness.addEmployee(newPerson);
+					biz.addEmployee(newPerson);
 					
 					tempPanel2.add(titleLabel);
 					tempPanel2.add(titleBox);
@@ -467,7 +402,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 					newPerson.setName(name);
 					newPerson.setPhone(phone);
 					newPerson.setEmail(email);
-					tempBusiness.addCustomer(newPerson);
+					biz.addCustomer(newPerson);
 					Employee tempEmp=null;
 					boolean flag = true;
 					
@@ -482,11 +417,11 @@ public class BusinessGUI extends JFrame implements ActionListener {
 					
 					if (rslt2 == JOptionPane.OK_OPTION)
 					{
-						for(int i=0; i<tempBusiness.getEmployees().size();i++)
+						for(int i=0; i<biz.getEmployees().size();i++)
 						{
-							if(tempBusiness.getEmployees().get(i).getName().equals(leadEmpBox.getText()))
+							if(biz.getEmployees().get(i).getName().equals(leadEmpBox.getText()))
 							{
-								tempEmp = tempBusiness.getEmployees().get(i);
+								tempEmp = biz.getEmployees().get(i);
 								newPerson.setLead(tempEmp);
 								flag = false;
 							}
@@ -523,16 +458,16 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		
 		System.out.println("List of customers: \n");
 		
-		for (int i=0; i<tempBusiness.getCustomers().size(); i++)
+		for (int i=0; i<biz.getCustomers().size(); i++)
 		{
-			System.out.println(tempBusiness.getCustomers().get(i).getName());
+			System.out.println(biz.getCustomers().get(i).getName());
 		}
 		
 		System.out.println("\n\nList of Employees: \n");
 		
-		for (int i=0; i<tempBusiness.getEmployees().size(); i++)
+		for (int i=0; i<biz.getEmployees().size(); i++)
 		{
-			System.out.println(tempBusiness.getEmployees().get(i).getName());
+			System.out.println(biz.getEmployees().get(i).getName());
 		}
 		
 		
@@ -593,20 +528,20 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				JTextArea tArea = new JTextArea();
 				Person tempPerson = null;
 				
-				for (int i=0;i<tempBusiness.getEmployees().size();i++)
+				for (int i=0;i<biz.getEmployees().size();i++)
 				{
-					if (name.trim().equals(tempBusiness.getEmployees().get(i).getName()))
+					if (name.trim().equals(biz.getEmployees().get(i).getName()))
 					{
-						tempPerson = tempBusiness.getEmployees().get(i);
+						tempPerson = biz.getEmployees().get(i);
 					}
 								
 				}
 				
-				for (int i=0; i < tempBusiness.getCustomers().size();i++)
+				for (int i=0; i < biz.getCustomers().size();i++)
 				{
-					if (name.trim().equals(tempBusiness.getCustomers().get(i).getName()))
+					if (name.trim().equals(biz.getCustomers().get(i).getName()))
 					{
-						tempPerson = tempBusiness.getCustomers().get(i);
+						tempPerson = biz.getCustomers().get(i);
 					}
 				}
 				redirectSystemStreams();
@@ -614,16 +549,16 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				System.out.println("\n\n Groups currently not a part of: ");
 				for(int i=0; i< tempPerson.getGroups().size();i++)
 				{
-					for(int j=0;j<tempBusiness.getProjectGroups().size();j++)
+					for(int j=0;j<biz.getProjectGroups().size();j++)
 					{
-						if(tempPerson.getGroups().get(i).equals(tempBusiness.getProjectGroups().get(j)))
+						if(tempPerson.getGroups().get(i).equals(biz.getProjectGroups().get(j)))
 						{
 							
 						}
 						
 						else
 						{
-							tempBusiness.getProjectGroups().get(j).print();
+							biz.getProjectGroups().get(j).print();
 						}
 					}
 				}
@@ -659,12 +594,12 @@ public class BusinessGUI extends JFrame implements ActionListener {
 							ProjectGroup newGroup = null;
 							Boolean GroupExists = true;
 							
-							for(int k=0; k< tempBusiness.getProjectGroups().size(); k++)
+							for(int k=0; k< biz.getProjectGroups().size(); k++)
 							{
-								if(tempBusiness.getProjectGroups().get(k).getName().equals(nameBox2.getText()))
+								if(biz.getProjectGroups().get(k).getName().equals(nameBox2.getText()))
 								{
 									
-									newGroup = tempBusiness.getProjectGroups().get(k);
+									newGroup = biz.getProjectGroups().get(k);
 									
 								}	
 							}
@@ -727,23 +662,65 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		
 	}
 	
+	private void HandleGroupCreate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void HandleGroupPrint() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void HandleGroupEdit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void HandleEventSearch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void HandleEventCreate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void HandleEventPrint() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void HandleEditEventList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	public boolean containsPerson(String name){
 		boolean customer = false;
 		boolean employee = false;
 		
 		
-		for (int i=0;i<tempBusiness.getEmployees().size();i++)
+		for (int i=0;i<biz.getEmployees().size();i++)
 		{
-			if (name.trim().equals(tempBusiness.getEmployees().get(i).getName()))
+			if (name.trim().equals(biz.getEmployees().get(i).getName()))
 			{
 				employee = true;
 			}
 						
 		}
 		
-		for (int i=0; i < tempBusiness.getCustomers().size();i++)
+		for (int i=0; i < biz.getCustomers().size();i++)
 		{
-			if (name.trim().equals(tempBusiness.getCustomers().get(i).getName()))
+			if (name.trim().equals(biz.getCustomers().get(i).getName()))
 			{
 				customer = true;
 			}
