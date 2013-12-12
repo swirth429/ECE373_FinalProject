@@ -1,3 +1,4 @@
+package software;
 /**
  * 
  */
@@ -7,6 +8,8 @@
  *
  */
 
+import people.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -15,7 +18,7 @@ import java.io.PrintStream;
 
 import javax.swing.*;
 
-public class ProjectGUI extends JFrame implements ActionListener {
+public class BusinessGUI extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu File;
 	private JMenu People;
@@ -42,7 +45,7 @@ public class ProjectGUI extends JFrame implements ActionListener {
 	private Business tempBusiness = null;
 	private JTextArea textArea;
 	
-	public ProjectGUI(String title, Business bus)
+	public BusinessGUI(String title, Business bus)
 	{
 		super(title);
 		

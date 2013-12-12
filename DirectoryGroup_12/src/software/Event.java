@@ -1,7 +1,10 @@
+package software;
 /**
  * 
  */
 import java.util.ArrayList;
+import software.*;
+import people.*;
 /**
  * @author Steven
  *

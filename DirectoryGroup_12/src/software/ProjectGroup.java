@@ -1,4 +1,9 @@
+package software;
+
 import java.util.ArrayList;
+
+import people.Customer;
+import people.Employee;
 
 /**
  * 

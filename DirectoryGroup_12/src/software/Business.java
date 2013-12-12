@@ -4,7 +4,10 @@
 
 //package 
 
+package software;
+
 import java.util.ArrayList;
+import people.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

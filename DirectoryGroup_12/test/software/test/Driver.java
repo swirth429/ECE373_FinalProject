@@ -1,18 +1,20 @@
+package software.test;
 // Richard Gonzales, Steven Wirth
 // ECE 373
 // Directory_Group 12 Driver
-
-//package
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import people.*;
+import software.*;
+
 public class Driver{
 	public static void main(String[] args) {
 		Business biz1 = new Business();
-		ProjectGUI newGUI;
+		BusinessGUI newGUI;
 		
 		// Create Business of employees, customers, groups and events
 		
@@ -52,7 +54,7 @@ public class Driver{
 		// test methods within classes
 		
 		// Instantiate GUI
-		newGUI = new ProjectGUI("BusinessGUI", biz1);
+		newGUI = new BusinessGUI("BusinessGUI", biz1);
 		
 	}
 }
