@@ -16,12 +16,14 @@ import people.Employee;
 public class ProjectGroup {
 	
 	String name;
-	ArrayList <Employee> employees = new ArrayList <Employee>();
-	ArrayList <Customer> customers = new ArrayList <Customer>();
+	ArrayList <Employee> employees;
+	ArrayList <Customer> customers;
 	
 	public ProjectGroup()
 	{
-		
+		name = null;
+		employees = new ArrayList <Employee>();
+		customers = new ArrayList <Customer>(); 
 	}
 	
 	public String getName()

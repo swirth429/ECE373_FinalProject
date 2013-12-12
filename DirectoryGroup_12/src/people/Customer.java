@@ -7,7 +7,8 @@ public class Customer extends Person{
 	
 	public Customer()
 	{
-		
+		super();
+		leadEmployee = null;
 	}
 	
 	public Employee getLead()

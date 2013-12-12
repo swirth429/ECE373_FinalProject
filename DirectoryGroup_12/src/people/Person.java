@@ -9,13 +9,17 @@ public class Person {
 	String name;
 	String phone;
 	String email;
-	ArrayList <ProjectGroup>groups = new ArrayList <ProjectGroup>();
-	ArrayList <Event>schedule = new ArrayList <Event>();
+	ArrayList <ProjectGroup>groups;
+	ArrayList <Event>schedule;
 	
 	
 	public Person()
 	{
-		
+		name = null;
+		phone = null;
+		email = null;
+		groups  = new ArrayList <ProjectGroup>();
+		schedule = new ArrayList <Event>();
 	}
 	
 	public String getName()

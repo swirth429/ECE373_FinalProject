@@ -13,11 +13,13 @@ public class Event {
 	
 	String name;
 	String location;
-	ArrayList<Person> attendees = new ArrayList<Person>();
+	ArrayList<Person> attendees;
 	
 	public Event()
 	{
-		
+		name = null;
+		location = null;
+		attendees = new ArrayList<Person>();
 	}
 
 	public String getName()
