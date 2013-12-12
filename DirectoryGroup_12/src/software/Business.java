@@ -7,6 +7,7 @@
 package software;
 
 import java.util.ArrayList;
+
 import people.*;
 
 import java.io.FileInputStream;
@@ -123,6 +124,30 @@ public class Business implements Serializable{
 		System.out.println("\nEvents:");
 		printEvents();
 	}
+	
+	public boolean containsPerson(String name){
+		boolean customer = false;
+		boolean employee = false;
+		
+		
+		for (int i=0; i < employees.size(); i++){
+			if (name.trim().equalsIgnoreCase(employees.get(i).getName())){
+				employee = true;
+			}				
+		}
+		
+		for (int i=0; i < customers.size();i++){
+			if (name.trim().equalsIgnoreCase(customers.get(i).getName())){
+				customer = true;
+			}
+		}
+		
+		if(employee == true || customer == true){
+			return true;
+		}
+		
+		return false;
+	}	
 
 	public void saveData(){
 		FileOutputStream fileOut = null;

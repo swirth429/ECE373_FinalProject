@@ -92,9 +92,6 @@ public class Driver{
 		biz1.events.add(event1);
 		biz1.events.add(event2);
 		
-		// TODO
-		// test methods within classes
-		
 		// Instantiate GUI
 		newGUI = new BusinessGUI(biz1.getName(), biz1);
 		

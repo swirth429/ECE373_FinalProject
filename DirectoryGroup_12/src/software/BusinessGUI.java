@@ -238,7 +238,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 											JOptionPane.PLAIN_MESSAGE);
 			}
 			
-			else if(containsPerson(name) == false)
+			else if(biz.containsPerson(name) == false)
 			{
 				JOptionPane.showMessageDialog(this, 
 						"Person not found", 
@@ -246,7 +246,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 						JOptionPane.PLAIN_MESSAGE);
 			}
 			
-			else if(containsPerson(name) == true)
+			else if(biz.containsPerson(name) == true)
 			{
 				JTextArea tArea = new JTextArea();
 				Person tempPerson = null;
@@ -361,7 +361,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 											JOptionPane.PLAIN_MESSAGE);
 			}
 			
-			else if(containsPerson(name) == true)
+			else if(biz.containsPerson(name) == true)
 			{
 				JOptionPane.showMessageDialog(this, 
 						"Person already exists!", 
@@ -369,7 +369,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 						JOptionPane.PLAIN_MESSAGE);
 			}
 			
-			else if(containsPerson(name) == false)
+			else if(biz.containsPerson(name) == false)
 			{
 				if(selectEmp.isSelected() == true)
 				{
@@ -515,7 +515,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 											JOptionPane.PLAIN_MESSAGE);
 			}
 			
-			else if(containsPerson(name) == false)
+			else if(biz.containsPerson(name) == false)
 			{
 				JOptionPane.showMessageDialog(this, 
 						"Person not found", 
@@ -523,7 +523,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 						JOptionPane.PLAIN_MESSAGE);
 			}
 			
-			else if(containsPerson(name) == true)
+			else if(biz.containsPerson(name) == true)
 			{
 				JTextArea tArea = new JTextArea();
 				Person tempPerson = null;
@@ -702,41 +702,6 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	public boolean containsPerson(String name){
-		boolean customer = false;
-		boolean employee = false;
-		
-		
-		for (int i=0;i<biz.getEmployees().size();i++)
-		{
-			if (name.trim().equals(biz.getEmployees().get(i).getName()))
-			{
-				employee = true;
-			}
-						
-		}
-		
-		for (int i=0; i < biz.getCustomers().size();i++)
-		{
-			if (name.trim().equals(biz.getCustomers().get(i).getName()))
-			{
-				customer = true;
-			}
-		}
-		
-		if(employee == true || customer == true)
-		{
-			return true;
-		}
-		
-		return false;
-	}
-	
-	
-	
-	
 	
 	private void updateTextArea(final String text) {
 	    SwingUtilities.invokeLater(new Runnable() {
@@ -744,9 +709,9 @@ public class BusinessGUI extends JFrame implements ActionListener {
 	        textArea.append(text);
 	      }
 	    });
-	  }
+	}
 
-	  private void redirectSystemStreams() {
+	private void redirectSystemStreams() {
 	    OutputStream out = new OutputStream() {
 	      @Override
 	      public void write(int b) throws IOException {
@@ -765,8 +730,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 	    };
 
 	    System.setOut(new PrintStream(out, true));
-	    System.setErr(new PrintStream(out, true));
-	  }
+	}
 	  
 
 }
