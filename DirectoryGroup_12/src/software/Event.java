@@ -54,7 +54,7 @@ public class Event {
 	
 	public void print()
 	{		
-			System.out.println("Event Name: "+name);
+			System.out.println("\n\nEvent Name: "+name);
 			System.out.println("Event Location: "+location);
 			System.out.println("Event Attendees:");
 			printAttendees();

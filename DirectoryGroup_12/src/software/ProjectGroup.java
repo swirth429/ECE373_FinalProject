@@ -48,7 +48,7 @@ public class ProjectGroup {
 	
 	public void print()
 	{
-		System.out.println("Group: " + name);
+		System.out.println("\n\nGroup: " + name);
 		System.out.println("Employees: ");
 		printEmployees();
 		System.out.println("Customers: ");

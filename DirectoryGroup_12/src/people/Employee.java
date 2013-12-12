@@ -18,5 +18,9 @@ public class Employee extends Person{
 	{
 		title = Title;
 	}
+	
+	public void print(){
+		System.out.println(name + " (" + title + ")");
+	}
 
 }
