@@ -612,11 +612,11 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				redirectSystemStreams();
 				tempPerson.PrintGroups();
 				System.out.println("\n\n Groups currently not a part of: ");
-				for(int i=0; i< tempPerson.groups.size();i++)
+				for(int i=0; i< tempPerson.getGroups().size();i++)
 				{
 					for(int j=0;j<tempBusiness.getProjectGroups().size();j++)
 					{
-						if(tempPerson.groups.get(i).equals(tempBusiness.getProjectGroups().get(j)))
+						if(tempPerson.getGroups().get(i).equals(tempBusiness.getProjectGroups().get(j)))
 						{
 							
 						}
@@ -672,9 +672,9 @@ public class BusinessGUI extends JFrame implements ActionListener {
 							if(newGroup != null)
 							{
 							
-							for(int k=0; k< tempPerson.groups.size(); k++)
+							for(int k=0; k< tempPerson.getGroups().size(); k++)
 							{
-								if(tempPerson.groups.get(k).equals(newGroup))
+								if(tempPerson.getGroups().get(k).equals(newGroup))
 								{
 									skipflag = true;
 									JOptionPane.showMessageDialog(this, 
