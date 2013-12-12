@@ -322,21 +322,21 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, 
 											"Please enter a valid name", 
 											"Error: Please enter a valid name", 
-											JOptionPane.PLAIN_MESSAGE);
+											JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else if(phone.trim().equals("")) {
 				JOptionPane.showMessageDialog(this, 
 											"Please enter a phone number", 
 											"Error: Please enter a phone number", 
-											JOptionPane.PLAIN_MESSAGE);
+											JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else if(email.trim().equals("")) {
 				JOptionPane.showMessageDialog(this, 
 											"Please enter an email address", 
 											"Error: Please enter an email", 
-											JOptionPane.PLAIN_MESSAGE);
+											JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else if(biz.containsPerson(name) == true)
@@ -344,7 +344,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, 
 						"Person already exists!", 
 						"Error: Person found", 
-						JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else if(biz.containsPerson(name) == false)
