@@ -63,7 +63,6 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		
 		buildGUI();
 		setVisible(true);
-		
 	}
 	
 	
@@ -148,22 +147,17 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		menuBar.add(Event);
 		
 		setJMenuBar(menuBar);
-		
-		
-		
-		
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		JMenuItem source = (JMenuItem) e.getSource();
 		
-		if (source == FileSave) 	biz.saveData();
-		if (source == FileLoad) 	biz = Business.loadData();
-		if (source == FilePrint) 	HandleFilePrint();
-		if (source == FileExit) 	System.exit(0);
+		if (source == FileSave) 		biz.saveData();
+		if (source == FileLoad) 		biz = Business.loadData();
+		if (source == FilePrint) 		HandleFilePrint();
+		if (source == FileExit) 		System.exit(0);
 		
 		if (source == PeopleSearch)		HandlePeopleSearch();
 		if (source == PeopleCreate)		HandlePeopleCreate();
@@ -182,7 +176,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		if (source == EditEventList)	HandleEditEventList();
 	}
 	
-	public void HandleFilePrint()
+	private void HandleFilePrint()
 	{
 		JPanel tempPanel = new JPanel();
 		textArea = new JTextArea(10,40);
@@ -205,7 +199,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		System.setOut(System.out);
 	}
 	
-	public void HandlePeopleSearch(){
+	private void HandlePeopleSearch(){
 		
 		int rslt;
 		String name = null;
@@ -284,7 +278,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void HandlePeopleCreate()
+	private void HandlePeopleCreate()
 	{
 		int rslt;
 		int rslt2;
@@ -446,7 +440,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void HandlePeoplePrint()
+	private void HandlePeoplePrint()
 	{
 		JPanel tempPanel = new JPanel();
 		textArea = new JTextArea(10,40);
@@ -481,7 +475,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		System.setOut(System.out);
 	}
 	
-	public void HandleGroupAddPerson()
+	private void HandleGroupAddPerson()
 	{
 		int rslt;
 		int rslt2;
@@ -652,12 +646,13 @@ public class BusinessGUI extends JFrame implements ActionListener {
 		}
 		System.setOut(System.out);
 	}
-	public void HandlePersonAddEvent()
+	
+	private void HandlePersonAddEvent()
 	{
 		
 	}
 	
-	public void HandleGroupSearch()
+	private void HandleGroupSearch()
 	{
 		
 	}
