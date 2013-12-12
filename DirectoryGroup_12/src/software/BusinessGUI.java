@@ -727,7 +727,7 @@ public class BusinessGUI extends JFrame implements ActionListener {
 	      }
 	    });
 	}
-
+//Commit Plz
 	private void redirectSystemStreams2(final JTextArea area) {
 	    OutputStream out = new OutputStream() {
 	      @Override
