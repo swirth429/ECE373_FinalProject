@@ -96,7 +96,7 @@ public class Driver{
 		// test methods within classes
 		
 		// Instantiate GUI
-		newGUI = new BusinessGUI("BusinessGUI", biz1);
+		newGUI = new BusinessGUI(biz1.getName(), biz1);
 		
 	}
 }
