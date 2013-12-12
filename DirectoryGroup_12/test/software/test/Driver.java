@@ -34,8 +34,48 @@ public class Driver{
 		Event event1 = new Event();
 		Event event2 = new Event();
 		
-		// TODO
 		// Set attributes
+		emp1.setName("Steven");
+		emp1.setPhone("1234567890");
+		emp1.setEmail("steven@biz.com");
+		emp1.setTitle("CoFounder");
+		
+		emp2.setName("Richard");
+		emp2.setPhone("2345678901");
+		emp2.setEmail("richard@biz.com");
+		emp2.setTitle("CoFounder");
+		
+		cust1.setName("Jack");
+		cust1.setPhone("1237894560");
+		cust1.setEmail("jack@domain.com");
+		cust1.setLead(emp1);
+		
+		cust2.setName("Jill");
+		cust2.setPhone("1112223344");
+		cust2.setEmail("jill@domain2.com");
+		cust2.setLead(emp2);
+		
+		pg1.setName("Steven's Project Group");
+		pg1.getEmployees().add(emp1);
+		pg1.getCustomers().add(cust1);
+		
+		pg2.setName("Richard's Project Group");
+		pg2.getEmployees().add(emp2);
+		pg2.getCustomers().add(cust2);
+		
+		event1.setName("Biz Event");
+		event1.setLocation("Biz Office");
+		event1.addAttendee(emp1);
+		event1.addAttendee(emp2);
+		event1.addAttendee(cust1);
+		event1.addAttendee(cust2);
+		
+		event2.setName("Super Secret Surprise Party");
+		event2.setLocation("Courtyard");
+		event2.addAttendee(emp1);
+		event2.addAttendee(emp2);
+		event2.addAttendee(cust1);
+		event2.addAttendee(cust2);
 		
 		// Add to instance of business
 		biz1.employees.add(emp1);

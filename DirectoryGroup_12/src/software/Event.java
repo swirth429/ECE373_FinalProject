@@ -42,6 +42,7 @@ public class Event {
 	
 	public void addAttendee(Person per)
 	{
+		//TODO Add check to see if person is already on list
 		attendees.add(per);
 	}
 	
