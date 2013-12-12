@@ -11,7 +11,7 @@ import people.Employee;
 
 /**
  * @author Steven
- *
+ * 
  */
 public class ProjectGroup {
 	
@@ -48,7 +48,33 @@ public class ProjectGroup {
 	
 	public void print()
 	{
-		System.out.println(name);
+		System.out.println("Group: " + name);
+		System.out.println("Employees: ");
+		printEmployees();
+		System.out.println("Customers: ");
+		printCustomers();
+		
+	}
+	
+	public void printEmployees(){
+		int i;
+		
+		for(i = 0; i < employees.size(); i++){
+			employees.get(i).print();
+		}
+	}
+	
+	public void printCustomers(){
+		int i;
+		
+		for(i = 0; i < customers.size(); i++){
+			customers.get(i).print();
+		}
+	}
+	
+	public void printGroupMembers(){
+		printEmployees();
+		printCustomers();
 	}
 	
 	

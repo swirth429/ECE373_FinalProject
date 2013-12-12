@@ -3,7 +3,6 @@ package software;
  * 
  */
 import java.util.ArrayList;
-import software.*;
 import people.*;
 /**
  * @author Steven
@@ -57,14 +56,13 @@ public class Event {
 	{		
 			System.out.println("Event Name: "+name);
 			System.out.println("Event Location: "+location);
-			System.out.println("\nEvent Attendees: \n");
-			
-		
+			System.out.println("Event Attendees:");
+			printAttendees();
 	}
 	
 	public void printAttendees()
 	{
-		for(int i =0; i<attendees.size();i++)
+		for( int i = 0; i < attendees.size(); i++ )
 		{
 			attendees.get(i).print();
 		}

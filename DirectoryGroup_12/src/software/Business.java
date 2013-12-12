@@ -98,18 +98,29 @@ public class Business implements Serializable{
 	
 	public void addEmployee(Employee emp)
 	{
+		//TODO see if employee already exists in database
 		this.employees.add(emp);
 	}
 	
 	public void addCustomer(Customer cust)
 	{
+		//TODO see if customer already exists in database
 		this.customers.add(cust);
 	}
 
 	public void printAll(){
+		System.out.println("Business Name: " + name);
+		
+		System.out.println("\nEmployees:");
 		printEmployees();
+		
+		System.out.println("\nCustomers: ");
 		printCustomers();
+		
+		System.out.println("\nProject Groups:");
 		printProjectGroups();
+		
+		System.out.println("\nEvents:");
 		printEvents();
 	}
 

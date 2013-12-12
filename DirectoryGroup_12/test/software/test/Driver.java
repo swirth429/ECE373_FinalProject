@@ -35,6 +35,8 @@ public class Driver{
 		Event event2 = new Event();
 		
 		// Set attributes
+		biz1.setName("The Biz");
+		
 		emp1.setName("Steven");
 		emp1.setPhone("1234567890");
 		emp1.setEmail("steven@biz.com");
