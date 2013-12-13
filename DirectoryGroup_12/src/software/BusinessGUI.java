@@ -242,12 +242,12 @@ public class BusinessGUI extends JFrame implements ActionListener {
 			
 			else if(biz.containsPerson(name) == true)
 			{
-				JTextArea tArea = new JTextArea();
+				JTextArea tArea = new JTextArea(30,30);
 				Person tempPerson = null;
 				
 				tempPerson = biz.findPerson(name);
 								
-				redirectSystemStreams();
+				redirectSystemStreams2(tArea);
 				
 				tempPerson.print();
 				tempPerson.printSchedule();
@@ -531,19 +531,20 @@ public class BusinessGUI extends JFrame implements ActionListener {
 				
 				tempPerson.PrintGroups();
 				System.out.println("\n\n Groups currently not a part of: ");
-				for(int i=0; i< tempPerson.getGroups().size();i++)
+				for(int i=0; i< biz.getProjectGroups().size();i++)
 				{
-					for(int j=0;j<biz.getProjectGroups().size();j++)
+					boolean flag = false;
+					for(int j=0;j<tempPerson.getGroups().size();j++)
+					{						
+						if(tempPerson.getGroups().get(j).equals(biz.getProjectGroups().get(i)))
+						{
+							flag = true;
+						}
+					}
+					
+					if (flag == false)
 					{
-						if(tempPerson.getGroups().get(i).equals(biz.getProjectGroups().get(j)))
-						{
-							
-						}
-						
-						else
-						{
-							biz.getProjectGroups().get(j).print();
-						}
+					biz.getProjectGroups().get(i).print();
 					}
 				}
 				
@@ -642,8 +643,186 @@ public class BusinessGUI extends JFrame implements ActionListener {
 	
 	private void HandlePersonAddEvent()
 	{
+		int rslt;
+		int rslt2;
+		String name = null;
 		
+		JTextArea textArea2 = new JTextArea(40,40);
+		Person tempPerson = null;
+		
+		JPanel tempPanel = new JPanel();
+		JPanel tempPanel2 = new JPanel();
+		
+		tempPanel.setLayout(new GridLayout(1,2));
+		tempPanel2.setLayout(new FlowLayout());
+		
+		
+		JLabel nameLabel = new JLabel("Name: ");
+		JTextField nameBox = new JTextField(15);
+		
+		tempPanel.add(nameLabel);
+		tempPanel.add(nameBox);
+		
+		rslt = JOptionPane.showConfirmDialog(this,
+				tempPanel,
+				"Search People",
+				JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		
+		if (rslt == JOptionPane.OK_OPTION)
+		{
+			name = nameBox.getText();
+			
+			if(name.trim().equals("")) {
+				JOptionPane.showMessageDialog(this, 
+											"Please enter a valid name", 
+											"Error: Please enter a valid name", 
+											JOptionPane.PLAIN_MESSAGE);
+			}
+			
+			else if(biz.containsPerson(name) == false)
+			{
+				JOptionPane.showMessageDialog(this, 
+						"Person not found", 
+						"Error: Person not found", 
+						JOptionPane.PLAIN_MESSAGE);
+			}
+			
+			else if(biz.containsPerson(name) == true)
+			{
+				
+				
+				for (int i=0;i<biz.getEmployees().size();i++)
+				{
+					if (name.trim().equals(biz.getEmployees().get(i).getName()))
+					{
+						tempPerson = biz.getEmployees().get(i);
+					}
+								
+				}
+				
+				for (int i=0; i < biz.getCustomers().size();i++)
+				{
+					if (name.trim().equals(biz.getCustomers().get(i).getName()))
+					{
+						tempPerson = biz.getCustomers().get(i);
+					}
+				}
+				
+				redirectSystemStreams2(textArea2);
+				
+				tempPerson.PrintEvents();
+				System.out.println("\n\n Events currently not a part of: ");
+				for(int i=0; i< biz.getEvents().size();i++)
+				{
+					boolean flag = false;
+					for(int j=0;j<tempPerson.getSchedule().size();j++)
+					{						
+						if(tempPerson.getSchedule().get(j).equals(biz.getEvents().get(i)))
+						{
+							flag = true;
+						}
+					}
+					
+					if (flag == false)
+					{
+					biz.getEvents().get(i).print();
+					}
+				}
+				
+				tempPanel2.add(textArea2);
+				System.setOut(System.out);
+				
+					rslt2=	JOptionPane.showConfirmDialog(this,
+						tempPanel2,
+						"Events",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.PLAIN_MESSAGE);
+					
+					if (rslt2 == JOptionPane.OK_OPTION)
+					{
+						boolean inEventflag = false;
+						boolean skipflag = false;
+						JPanel tempPanel3 = new JPanel();
+						int rslt3;
+						String newName;
+						
+						JLabel nameLabel3 = new JLabel("Name of Event to add "+name+" to:");
+						JTextField nameBox2 = new JTextField(15);
+						
+						tempPanel3.add(nameLabel3);
+						tempPanel3.add(nameBox2);
+						
+						rslt3=	JOptionPane.showConfirmDialog(this,
+								tempPanel3,
+								"Please Enter a name",
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE);
+						
+						if (rslt3 == JOptionPane.OK_OPTION)
+						{
+							Event newEvent = null;
+							Boolean GroupExists = true;
+							
+							for(int k=0; k< biz.getProjectGroups().size(); k++)
+							{
+								if(biz.getEvents().get(k).getName().equals(nameBox2.getText()))
+								{
+									
+									newEvent = biz.getEvents().get(k);
+									
+								}	
+							}
+							
+							if(newEvent != null)
+							{
+							
+							for(int k=0; k< tempPerson.getSchedule().size(); k++)
+							{
+								if(tempPerson.getSchedule().get(k).equals(newEvent))
+								{
+									skipflag = true;
+									JOptionPane.showMessageDialog(this, 
+											"Already in Event", 
+											"Error: Person already in Event", 
+											JOptionPane.PLAIN_MESSAGE);
+									
+								}
+								
+								
+							}
+									
+							
+							if (skipflag == false)
+							{
+								
+								
+									
+										
+										tempPerson.addEvent(newEvent);
+										
+										JOptionPane.showMessageDialog(this, 
+												"Success!", 
+												"Success: The new group was added!", 
+												JOptionPane.PLAIN_MESSAGE);
+										
+									
+																																													
+							}
+							
+							
+							}
+														
+						}
+						
+					}
+					
+		
+			}
+		}
+		System.setOut(System.out);
 	}
+	
 	
 	private void HandleGroupSearch()
 	{

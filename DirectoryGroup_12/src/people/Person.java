@@ -79,25 +79,34 @@ public class Person {
 	
 	public void printContactInfo()
 	{
-		System.out.println("Name: "+name);
-		System.out.println("Phone Number: " + phone);
-		System.out.println("Email: "+ email);
+		System.out.println("Name: "+this.name);
+		System.out.println("Phone Number: " + this.phone);
+		System.out.println("Email: "+ this.email);
 	}
 	
 	public void printSchedule()
 	{
 		for (int i=0; i<schedule.size();i++)
 		{
-			schedule.get(i).print();
+			this.schedule.get(i).print();
 		}
 	}
 	
 	public void PrintGroups()
 	{
 		System.out.println("Person is in the following groups: ");
-		for (int i=0; i<groups.size();i++)
+		for (int i=0; i<this.groups.size();i++)
 		{
 			groups.get(i).print();
+		}
+	}
+	
+	public void PrintEvents()
+	{
+		System.out.println("Person is in the following Events: ");
+		for (int i=0; i<this.schedule.size();i++)
+		{
+			this.schedule.get(i).print();
 		}
 	}
 	
